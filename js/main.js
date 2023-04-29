@@ -8,6 +8,8 @@ const songTitle = document.getElementById("song-title");
 const artistName = document.getElementById("artist-name");
 const songListContainer = document.getElementById("song-list-container");
 const showSongListBtn = document.getElementById("show-song-list-btn");
+const currentTimeDisplay = document.querySelector(".current-time");
+const totalDurationDisplay = document.querySelector(".total-duration");
 
 playBtn.addEventListener("click", playSong);
 pauseBtn.addEventListener("click", pauseSong);
@@ -46,15 +48,29 @@ async function displaySongList() {
     });
 }
 
+function formatTime(timeInSeconds) {
+    const minutes = Math.floor(timeInSeconds / 60);
+    const seconds = Math.floor(timeInSeconds % 60);
+    return `${minutes}:${seconds.toString().padStart(2, "0")}`;
+}
+
 function playSong() {
-    if (audio) {
-        audio.pause();
+    const isNewSong = !audio || (audio && songsData[currentSongIndex].filename !== audio.src.split('/').pop());
+    if (isNewSong) {
+        if (audio) {
+            audio.pause();
+            audio.addEventListener("timeupdate", updateProgress);
+        }
+
+        const song = songsData[currentSongIndex];
+        audio = new Audio(`assets/music/${song.filename}`);
+        audio.addEventListener("timeupdate", updateProgress);
+        audio.addEventListener("loadedmetadata", () => {
+            totalDurationDisplay.textContent = formatTime(audio.duration);
+        });
     }
 
-    const song = songsData[currentSongIndex];
-    audio = new Audio(`assets/music/${song.filename}`);
     audio.play();
-
     updateSongInfo();
 }
 
@@ -67,6 +83,7 @@ function pauseSong() {
 function stopSong() {
     if (audio) {
         audio.pause();
+        audio.removeEventListener("timeupdate", updateProgress);
         audio.currentTime = 0;
     }
 }
@@ -82,6 +99,12 @@ function showSongList() {
     coverImage.classList.add("hidden");
     songListContainer.classList.remove("hidden");
     showSongListBtn.classList.add("hidden");
+}
+
+function updateProgress() {
+    const progressBar = document.querySelector(".song-progress");
+    progressBar.value = (audio.currentTime / audio.duration) * 100;
+    currentTimeDisplay.textContent = formatTime(audio.currentTime);
 }
 
 displaySongList();

@@ -144,3 +144,11 @@ button:focus {
 .hidden {
     display: none;
 }
+
+.current-time,
+.separator,
+.total-duration {
+    color: white;
+    font-size: 12px;
+    padding: 0 5px;
+}
