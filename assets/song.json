@@ -1,0 +1,23 @@
+[
+    {
+        "title": "FANCY",
+        "artist": "TWICE",
+        "album": "FANCY YOU",
+        "filename": "fancy.mp3",
+        "cover": "https://lv2-cdn.azureedge.net/twice/FANCY_YOU.jpg"
+    },
+    {
+        "title": "Feel Special",
+        "artist": "TWICE",
+        "album": "Feel Special",
+        "filename": "feel_special.mp3",
+        "cover": "https://lv2-cdn.azureedge.net/twice/Feel_Special.jpg"
+    },
+    {
+        "title": "What is Love?",
+        "artist": "TWICE",
+        "album": "What is Love?",
+        "filename": "what_is_love.mp3",
+        "cover": "https://lv2-cdn.azureedge.net/twice/What_is_Love.jpg"
+    }
+]
