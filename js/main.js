@@ -11,12 +11,14 @@ const showSongListBtn = document.getElementById("show-song-list-btn");
 const currentTimeDisplay = document.querySelector(".current-time");
 const totalDurationDisplay = document.querySelector(".total-duration");
 const progressBar = document.querySelector(".song-progress"); 
+const volumeControl = document.querySelector(".volume-control");
 
 playBtn.addEventListener("click", playSong);
 pauseBtn.addEventListener("click", pauseSong);
 stopBtn.addEventListener("click", stopSong);
 showSongListBtn.addEventListener("click", showSongList);
 progressBar.addEventListener("input", changeProgress);
+volumeControl.addEventListener("input", changeVolume);
 
 let currentSongIndex = 0;
 let songsData = [];
@@ -112,6 +114,13 @@ function changeProgress(event) {
     if (audio) {
         const newProgress = event.target.value;
         audio.currentTime = (newProgress / 100) * audio.duration;
+    }
+}
+
+function changeVolume(event) {
+    if (audio) {
+        const newVolume = event.target.value;
+        audio.volume = newVolume / 100;
     }
 }
 
