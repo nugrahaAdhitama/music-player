@@ -140,3 +140,7 @@ button:focus {
 .song-item:hover {
     color: #ddd;
 }
+
+.hidden {
+    display: none;
+}

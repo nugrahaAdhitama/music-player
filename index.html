@@ -8,18 +8,19 @@
 </head>
 <body>
     <div class="music-player">
-        <div class="album-cover">
-            <img src="assets/images/cover1.jpg" alt="Album Cover">
-            <div class="song-list-container">
+        <div class="album-cover" id="album-cover">
+            <img src="" alt="Album Cover" id="cover-image" class="hidden">
+            <div class="song-list-container" id="song-list-container">
                 <h3 class="song-list-title">Daftar Lagu</h3>
                 <ul class="song-list">
                 </ul>
             </div>            
         </div>
         <div class="song-info">
-            <h2 class="song-title">Song Title</h2>
-            <h3 class="artist-name">Artist Name</h3>
+            <h2 class="song-title" id="song-title">Song Title</h2>
+            <h3 class="artist-name" id="artist-name">Artist Name</h3>
         </div>
+        <button class="show-song-list-btn hidden" id="show-song-list-btn">Tampilkan Daftar Lagu</button>
         <div class="progress-container">
             <input type="range" class="song-progress" min="0" value="0" step="1">
         </div>
