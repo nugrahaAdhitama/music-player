@@ -10,11 +10,13 @@ const songListContainer = document.getElementById("song-list-container");
 const showSongListBtn = document.getElementById("show-song-list-btn");
 const currentTimeDisplay = document.querySelector(".current-time");
 const totalDurationDisplay = document.querySelector(".total-duration");
+const progressBar = document.querySelector(".song-progress"); 
 
 playBtn.addEventListener("click", playSong);
 pauseBtn.addEventListener("click", pauseSong);
 stopBtn.addEventListener("click", stopSong);
 showSongListBtn.addEventListener("click", showSongList);
+progressBar.addEventListener("input", changeProgress);
 
 let currentSongIndex = 0;
 let songsData = [];
@@ -102,9 +104,15 @@ function showSongList() {
 }
 
 function updateProgress() {
-    const progressBar = document.querySelector(".song-progress");
     progressBar.value = (audio.currentTime / audio.duration) * 100;
     currentTimeDisplay.textContent = formatTime(audio.currentTime);
+}
+
+function changeProgress(event) {
+    if (audio) {
+        const newProgress = event.target.value;
+        audio.currentTime = (newProgress / 100) * audio.duration;
+    }
 }
 
 displaySongList();
