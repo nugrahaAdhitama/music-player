@@ -15,6 +15,7 @@ const previousBtn = document.querySelector(".previous-btn");
 const nextBtn = document.querySelector(".next-btn");
 const playIconBtn = document.getElementById("play-btn");
 const pauseIconBtn = document.getElementById("pause-btn");
+const shuffleBtn = document.getElementById("shuffle-btn");
 
 playBtn.addEventListener("click", playSong);
 pauseBtn.addEventListener("click", pauseSong);
@@ -23,10 +24,13 @@ progressBar.addEventListener("input", changeProgress);
 volumeControl.addEventListener("input", changeVolume);
 previousBtn.addEventListener("click", previousSong);
 nextBtn.addEventListener("click", nextSong);
+shuffleBtn.addEventListener("click", toggleShuffle);
 
 let currentSongIndex = 0;
 let songsData = [];
 let audio = null;
+let shuffle = false;
+let previousSongIndex;
 
 async function fetchSongData() {
     const response = await fetch("assets/song.json");
@@ -131,7 +135,12 @@ function previousSong() {
         if (audio.currentTime > 3 || currentSongIndex === 0) {
             audio.currentTime = 0;
         } else {
-            currentSongIndex--;
+            if (shuffle && previousSongIndex !== undefined) {
+                currentSongIndex = previousSongIndex;
+                previousSongIndex = undefined;
+            } else {
+                currentSongIndex = currentSongIndex - 1;
+            }
             playSong();
         }
     }
@@ -142,10 +151,26 @@ function nextSong() {
         if (currentSongIndex === songsData.length - 1) {
             audio.currentTime = audio.duration;
         } else {
-            currentSongIndex++;
+            currentSongIndex = shuffle ? getRandomSongIndex() : currentSongIndex + 1;
             playSong();
         }
     }
+}
+
+function toggleShuffle() {
+    shuffle = !shuffle;
+    if (shuffle) {
+        previousSongIndex = currentSongIndex;
+    }
+    shuffleBtn.classList.toggle("active");
+}
+
+function getRandomSongIndex() {
+    let randomIndex;
+    do {
+        randomIndex = Math.floor(Math.random() * songsData.length);
+    } while (randomIndex === currentSongIndex);
+    return randomIndex;
 }
 
 displaySongList();

@@ -203,3 +203,17 @@ button:focus {
     margin: 0 10px;
     background: none;
 }
+
+.shuffle-btn {
+    margin: 0 5px;
+    padding: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outine: none;
+    color: white;
+}
+
+.shuffle-btn.active {
+    color: #f0c874;
+}
