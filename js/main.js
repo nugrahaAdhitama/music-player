@@ -1,7 +1,6 @@
 const songList = document.querySelector(".song-list");
 const playBtn = document.querySelector(".play-btn");
 const pauseBtn = document.querySelector(".pause-btn");
-const stopBtn = document.querySelector(".stop-btn");
 const albumCover = document.getElementById("album-cover");
 const coverImage = document.getElementById("cover-image");
 const songTitle = document.getElementById("song-title");
@@ -19,7 +18,6 @@ const pauseIconBtn = document.getElementById("pause-btn");
 
 playBtn.addEventListener("click", playSong);
 pauseBtn.addEventListener("click", pauseSong);
-stopBtn.addEventListener("click", stopSong);
 showSongListBtn.addEventListener("click", showSongList);
 progressBar.addEventListener("input", changeProgress);
 volumeControl.addEventListener("input", changeVolume);
@@ -93,14 +91,6 @@ function pauseSong() {
         audio.pause();
         playIconBtn.classList.remove("hidden");
         pauseIconBtn.classList.add("hidden");
-    }
-}
-
-function stopSong() {
-    if (audio) {
-        audio.pause();
-        audio.removeEventListener("timeupdate", updateProgress);
-        audio.currentTime = 0;
     }
 }
 
