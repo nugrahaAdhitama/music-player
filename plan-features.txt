@@ -1,0 +1,17 @@
+Berdasarkan fitur-fitur yang sudah ada pada aplikasi, berikut beberapa ide fitur tambahan yang bisa dikembangkan oleh seorang pemrogram pemula:
+
+Tombol next dan previous: Tambahkan tombol untuk memainkan lagu berikutnya atau sebelumnya dalam daftar lagu, sehingga pengguna dapat dengan mudah berpindah antar lagu.
+
+Tampilan waktu sisa: Selain menampilkan waktu saat ini dan durasi total, tambahkan tampilan waktu sisa pada lagu yang sedang diputar.
+
+Shuffle dan repeat: Tambahkan fitur untuk mengacak urutan pemutaran lagu dan mengulang lagu saat ini atau seluruh daftar lagu.
+
+Membuat playlist: Berikan kemampuan bagi pengguna untuk membuat playlist mereka sendiri, sehingga mereka dapat mengatur lagu sesuai dengan preferensi mereka.
+
+Pencarian lagu: Tambahkan fitur pencarian untuk memudahkan pengguna mencari lagu dalam daftar yang ada.
+
+Responsivitas: Optimalkan tampilan aplikasi untuk berbagai ukuran layar dan perangkat, seperti smartphone dan tablet.
+
+Tambahkan dukungan untuk format audio lainnya: Selain MP3, tambahkan dukungan untuk format audio lain seperti WAV, OGG, dan FLAC.
+
+Integrasi dengan layanan musik online: Integrasi aplikasi dengan layanan musik online seperti Spotify atau SoundCloud, sehingga pengguna dapat memutar lagu dari layanan tersebut.

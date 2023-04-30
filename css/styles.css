@@ -214,6 +214,11 @@ button:focus {
     color: white;
 }
 
-.shuffle-btn.active {
+.player-btn {
+    background: none;
+}
+
+.shuffle-btn.active,
+#repeat.active {
     color: #f0c874;
 }

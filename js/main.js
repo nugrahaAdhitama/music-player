@@ -16,6 +16,7 @@ const nextBtn = document.querySelector(".next-btn");
 const playIconBtn = document.getElementById("play-btn");
 const pauseIconBtn = document.getElementById("pause-btn");
 const shuffleBtn = document.getElementById("shuffle-btn");
+const repeatButton = document.getElementById("repeat");
 
 playBtn.addEventListener("click", playSong);
 pauseBtn.addEventListener("click", pauseSong);
@@ -25,12 +26,14 @@ volumeControl.addEventListener("input", changeVolume);
 previousBtn.addEventListener("click", previousSong);
 nextBtn.addEventListener("click", nextSong);
 shuffleBtn.addEventListener("click", toggleShuffle);
+repeatButton.addEventListener("click", toggleRepeat);
 
 let currentSongIndex = 0;
 let songsData = [];
 let audio = null;
 let shuffle = false;
 let previousSongIndex;
+let repeatState = 0;
 
 async function fetchSongData() {
     const response = await fetch("assets/song.json");
@@ -73,7 +76,8 @@ function playSong() {
     if (isNewSong) {
         if (audio) {
             audio.pause();
-            audio.addEventListener("timeupdate", updateProgress);
+            audio.removeEventListener("timeupdate", updateProgress);
+            audio.removeEventListener("ended", handleSongEnded);
         }
 
         const song = songsData[currentSongIndex];
@@ -82,6 +86,7 @@ function playSong() {
         audio.addEventListener("loadedmetadata", () => {
             totalDurationDisplay.textContent = formatTime(audio.duration);
         });
+        audio.addEventListener("ended", handleSongEnded);
     }
 
     audio.play();
@@ -132,27 +137,38 @@ function changeVolume(event) {
 
 function previousSong() {
     if (audio) {
-        if (audio.currentTime > 3 || currentSongIndex === 0) {
+        if (repeatState === 2) {
             audio.currentTime = 0;
+            audio.play();
         } else {
-            if (shuffle && previousSongIndex !== undefined) {
-                currentSongIndex = previousSongIndex;
-                previousSongIndex = undefined;
+            if (audio.currentTime > 3 || currentSongIndex === 0) {
+                audio.currentTime = 0;
             } else {
-                currentSongIndex = currentSongIndex - 1;
+                if (shuffle && previousSongIndex !== undefined) {
+                    currentSongIndex = previousSongIndex;
+                    previousSongIndex = undefined;
+                } else {
+                    currentSongIndex = currentSongIndex - 1;
+                }
+                playSong();
             }
-            playSong();
         }
     }
 }
 
 function nextSong() {
     if (audio) {
-        if (currentSongIndex === songsData.length - 1) {
-            audio.currentTime = audio.duration;
+        if (repeatState === 2) {
+            audio.currentTime = 0;
+            audio.play();
         } else {
-            currentSongIndex = shuffle ? getRandomSongIndex() : currentSongIndex + 1;
-            playSong();
+            if (currentSongIndex === songsData.lenth - 1 && repeatState !== 1) {
+                audio.currentTime = audio.duration;
+                pauseSong();
+            } else {
+                currentSongIndex = shuffle ? getRandomSongIndex() : (currentSongIndex + 1) % songsData.length;
+                playSong();
+            }
         }
     }
 }
@@ -171,6 +187,33 @@ function getRandomSongIndex() {
         randomIndex = Math.floor(Math.random() * songsData.length);
     } while (randomIndex === currentSongIndex);
     return randomIndex;
+}
+
+function toggleRepeat() {
+    repeatState = (repeatState + 1) % 3;
+    switch (repeatState) {
+        case 0: //Tidak ada pengulangan
+            repeatButton.classList.remove("active");
+            repeatButton.innerHTML = '<i class="fas fa-redo"></i>';
+            break;
+        case 1: //Mengulang seluruh daftar lagu
+            repeatButton.classList.add("active");
+            repeatButton.innerHTML = '<i class="fas fa-redo"></i>';
+            break;
+        case 2: //Mengulang lagu yang sedang diputar
+            repeatButton.classList.add("active");
+            repeatButton.innerHTML = '<i class="fas fa-redo-alt"></i>';
+            break;
+    }
+}
+
+function handleSongEnded() {
+    if (repeatState === 2) {
+        audio.currentTime = 0;
+        audio.play();
+    } else {
+        nextSong ();
+    }
 }
 
 displaySongList();
