@@ -12,6 +12,8 @@ const currentTimeDisplay = document.querySelector(".current-time");
 const totalDurationDisplay = document.querySelector(".total-duration");
 const progressBar = document.querySelector(".song-progress"); 
 const volumeControl = document.querySelector(".volume-control");
+const previousBtn = document.querySelector(".previous-btn");
+const nextBtn = document.querySelector(".next-btn");
 
 playBtn.addEventListener("click", playSong);
 pauseBtn.addEventListener("click", pauseSong);
@@ -19,6 +21,8 @@ stopBtn.addEventListener("click", stopSong);
 showSongListBtn.addEventListener("click", showSongList);
 progressBar.addEventListener("input", changeProgress);
 volumeControl.addEventListener("input", changeVolume);
+previousBtn.addEventListener("click", previousSong);
+nextBtn.addEventListener("click", nextSong);
 
 let currentSongIndex = 0;
 let songsData = [];
@@ -121,6 +125,28 @@ function changeVolume(event) {
     if (audio) {
         const newVolume = event.target.value;
         audio.volume = newVolume / 100;
+    }
+}
+
+function previousSong() {
+    if (audio) {
+        if (audio.currentTime > 3 || currentSongIndex === 0) {
+            audio.currentTime = 0;
+        } else {
+            currentSongIndex--;
+            playSong();
+        }
+    }
+}
+
+function nextSong() {
+    if (audio) {
+        if (currentSongIndex === songsData.length - 1) {
+            audio.currentTime = audio.duration;
+        } else {
+            currentSongIndex++;
+            playSong();
+        }
     }
 }
 

@@ -178,3 +178,18 @@ button:focus {
     font-size: 12px;
     padding: 0 5px;
 }
+
+.previous-btn i, .next-btn i {
+    font-size: 18px;
+    vertical-align: middle;
+}
+
+.previous-btn, .next-btn {
+    margin: 0 5px;
+    padding: 5px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    outline: none;
+    color: white;
+}
