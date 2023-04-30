@@ -14,6 +14,8 @@ const progressBar = document.querySelector(".song-progress");
 const volumeControl = document.querySelector(".volume-control");
 const previousBtn = document.querySelector(".previous-btn");
 const nextBtn = document.querySelector(".next-btn");
+const playIconBtn = document.getElementById("play-btn");
+const pauseIconBtn = document.getElementById("pause-btn");
 
 playBtn.addEventListener("click", playSong);
 pauseBtn.addEventListener("click", pauseSong);
@@ -54,6 +56,8 @@ async function displaySongList() {
         });
         songList.appendChild(songItem);
     });
+
+    playIconBtn.classList.remove("hidden");
 }
 
 function formatTime(timeInSeconds) {
@@ -80,11 +84,15 @@ function playSong() {
 
     audio.play();
     updateSongInfo();
+    playIconBtn.classList.add("hidden");
+    pauseIconBtn.classList.remove("hidden");
 }
 
 function pauseSong() {
     if (audio) {
         audio.pause();
+        playIconBtn.classList.remove("hidden");
+        pauseIconBtn.classList.add("hidden");
     }
 }
 
